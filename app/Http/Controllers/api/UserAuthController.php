@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class UserAuthController extends Controller
 {
@@ -148,7 +149,7 @@ public function updateProfileImage(Request $request)
         // Get the image from the request
         $getImage = $request->file('image');
         $imageName = time() . '.' . $getImage->getClientOriginalExtension();
-        $imagePath = 'images/profiles/' . $imageName;
+        $imagePath = 'public/profile_image' . $imageName;
 
         // Delete the old image if it exists
         if ($user->image) {
@@ -156,7 +157,7 @@ public function updateProfileImage(Request $request)
         }
 
         // Move the new image to the public storage
-        $getImage->storeAs('images/profiles', $imageName, 'public');
+        $getImage->storeAs('public/profile_image', $imageName, 'public');
 
         // Update the user's profile image path
         $user->image = $imagePath;

@@ -28,3 +28,4 @@ Route::post('logout',[UserAuthController::class,'logout'])
 
 //list user 
 Route::middleware('auth:sanctum')->get('users', [UserAuthController::class, 'listUsers']);
+Route::middleware('auth:sanctum')->post('profile/image', [UserAuthController::class, 'updateProfileImage']);
