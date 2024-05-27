@@ -119,7 +119,23 @@ class UserAuthController extends Controller
       // Fetch users from the database excluding the authenticated user
       $users = User::select('name', 'phone', 'account_number', 'image')
                   ->where('id', '!=', $authenticatedUser->id)
-                  ->get();
+                  ->get()
+                  ->map(function ($user) {
+                    if ($user->image) {
+                        $user->image = asset('storage/' . $user->image);
+                    } else {
+                        $user->image = null; // Or you can set it to a default image URL if needed
+                    }
+                    return $user;
+                });
+
+
+    //     if (!$authenticatedUser->image) {
+    //     // If user does not have an image, return a default image or appropriate message
+    //     return response()->json(['message' => 'User does not have a profile image'], 404);
+    // }
+
+    $imageUrl = asset('storage/' . $authenticatedUser->image);
 
       // Return the user data as a JSON response
       return response()->json([
@@ -149,7 +165,7 @@ public function updateProfileImage(Request $request)
         // Get the image from the request
         $getImage = $request->file('image');
         $imageName = time() . '.' . $getImage->getClientOriginalExtension();
-        $imagePath = 'public/profile_image' . $imageName;
+        $imagePath = 'public/profile_image/' . $imageName;
 
         // Delete the old image if it exists
         if ($user->image) {
@@ -165,7 +181,7 @@ public function updateProfileImage(Request $request)
 
         return response()->json([
             'message' => 'Profile image updated successfully',
-            'image' => $imagePath
+            'image' => asset($imagePath) //return full url of the image 
         ], 200);
     }
 
