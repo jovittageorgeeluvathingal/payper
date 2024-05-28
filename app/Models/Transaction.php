@@ -15,7 +15,8 @@ class Transaction extends Model
         'amount',
         'charge',
         'balance',
-        'status'
+        'status',
+        'notes'
     ];
 
     public function sender()

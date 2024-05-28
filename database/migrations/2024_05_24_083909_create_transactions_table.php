@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('sender_id')->constrained('users');
             $table->foreignId('receiver_id')->constrained('users');
             $table->decimal('amount', 15, 2);
-            $table->decimal('charge', 15, 2)->default(25);
+            $table->decimal('charge', 15, 2)->default(00);
             $table->decimal('balance', 15, 2);
             $table->string('status')->nullable();
             $table->timestamps();

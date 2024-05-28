@@ -34,4 +34,5 @@ Route::middleware('auth:sanctum')->post('profile/image', [UserAuthController::cl
 Route::middleware('auth:sanctum')->group(function () {
     // Transaction routes
     Route::post('/transaction', [TransactionController::class, 'makeTransaction']);
+    Route::get('purpose/{id}',[TransactionController::class,'getpurpose']);
 });
