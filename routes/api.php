@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\UserAuthController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\ProfileController;
 
 
 /*
@@ -35,4 +36,6 @@ Route::middleware('auth:sanctum')->group(function () {
     // Transaction routes
     Route::post('/transaction', [TransactionController::class, 'makeTransaction']);
     Route::get('purpose/{id}',[TransactionController::class,'getpurpose']);
+    Route::get('/profile', [ProfileController::class, 'show']);
+    Route::put('/profile', [ProfileController::class, 'update']);
 });
